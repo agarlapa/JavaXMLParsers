@@ -1,0 +1,101 @@
+1. DOM XML Parser is easiest to understand and learn. 
+
+2. DOM XML parser loads the complete XML object into memory as Document, then you can easily traverse different elements and nodes in the XML object. 
+   The traversing of elements and nodes are not required to be in order.
+
+3. DOM XML Parser is good for small XML files but when XML file size increases it performs slow and consumes more RAM (Heap) memory. For large XML files, you should use SAX Parser.
+
+4. In real life, it's not a bad idea to validate XML file before parsing it to objects.
+
+5. The javax.xml.Parsers.DocumentBuilderFactory class defines a factory API that enables applications to obtain a parser that produces DOM object trees from XML documents.
+
+6. The javax.xml.parsers.DocumentBuilder is an instance of the DOM parser.
+
+7. Using this DOM parser you can parse XML files into DOM objects.
+
+8. The Java DOM API for XML parsing is intended for working with XML as an object graph in memory - a "Document Object Model (DOM)". 
+   The parser traverses the XML file and creates the corresponding DOM objects. These DOM objects are linked together in a tree structure. 
+   Once the parser is done, you get this DOM object structure back from it. Then you can traverse the DOM structure back and forth as you see fit.
+
+9. The DOM Document object represents an XML document. When you parse an XML file using a Java DOM parser, you get back a Document object.
+
+10. The two most commonly used features of DOM are: 
+	a) Accessing Child Elements of an Element
+	b) Accessing Attributes of an Element
+
+11. The Document interface and all related interfaces are located in the Java package org.w3c.dom, because they were designed by the World Wide Web Consortium (W3C).
+
+12. A DOM object contains a lot of different nodes connected in a tree-like structure. At the top is the Document object. 
+    The Document object has a single root element, which is returned by calling getDocumentElement() like this: Element rootElement = document.getDocumentElement();
+
+13. DOM Elements, Child Elements, and the Node Interface:
+
+	The root element has children which can be elements, comments, processing instructions, characters etc. 
+	You get the children of an element like this:
+	
+	NodeList nodes = element.getChildNodes();
+
+	for(int i=0; i<nodes.getLength(); i++){
+  	  Node node = nodes.item(i);
+
+	  if(node instanceof Element){
+	    //a child element to process
+	    Element child = (Element) node;
+	    String attribute = child.getAttribute("width");
+	  }
+	}
+
+    The getChildNodes() method returns a NodeList object, which is a list of Node elements. 
+    The Node interface is a super interface for pretty much all of the different node types in DOM. 
+    This means, that the Document interface inherits from (extends) Node, the Element interface extends Node, 
+    the Attr (attribute) interface extends Node etc.
+    
+    API: 
+    	public interface Document extends Node
+    	public interface Element extends Node
+    	public interface Attr extends Node
+ 
+ 14. DOM Element Attributes:
+     
+      You can access the attributes of an element via the Element interface. 
+      There are two ways to do so:
+		a) String attrValue = element.getAttribute("attrName");
+		b) Attr attribute = element.getAttributeNode("attrName");
+
+	  Most of the time the getAttribute() method will do just fine.
+
+      The Attr interface extends Node. It allows you to access the owning element via the method getOwnerElement() etc. 
+      Accessing an attribute via this interface is mostly handy if you need to pass the attribute to one or more methods, 
+      where the method needs to access more info about the attribute in order to process it.
+  
+  15. Java DOM Schema Validation
+  	  
+  	  In Java it is possible to validate a DOM graph according to an XML Schema. The validation happens after the DOM graph is created, not during DOM graph creation.
+  	  
+  	  First you must load the XML Schema into a Schema object. Once loaded into a Schema object you can use that same Schema object to validate multiple DOM graphs. 
+  	  This is smart, because then you only have to parse the XML Schema once. The result is significantly better performance, compared to both loading and parsing the XML document 
+  	  and the XML Schema / DTD for each XML document.
+	  
+	  Here is how you load an XML Schema into a Schema instance:
+	  
+	  	Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(name));
+		} catch (Exception e) {
+		    e.printStackStrace()
+		}
+
+	 There are a few additional newSchema() methods, for instance one that lets you load a Schema from a Java URL object.
+	 
+	 Once loaded, you validate the DOM document like this:
+
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+	The Schema classes are found in the java package javax.xml.validation. The DOMSource classes are found in the java package javax.xml.transform.
+	
+	If the validation fails, an exception is thrown. You can also set an error handler on the Validator object. Thus, you can collect multiple schema errors in the same document.
+
+	
+	
