@@ -44,6 +44,7 @@ public class XMLReaderDOM {
             }
             //lets print Employee list information
             for (Employee emp : empList) {
+            	System.out.println("Test 1");
                 System.out.println(emp.toString());
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {
