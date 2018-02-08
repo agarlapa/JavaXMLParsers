@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
 public class ModifyXMLDOM {
 
     public static void main(String[] args) {
-        String filePath = "src/input/employee.xml";
+        String filePath = "src/input/employees.xml";
         File xmlFile = new File(filePath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
@@ -55,7 +55,7 @@ public class ModifyXMLDOM {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("src/input/employee_updated.xml"));
+            StreamResult result = new StreamResult(new File("src/input/employees_updated.xml"));
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(source, result);
             System.out.println("XML file updated successfully");

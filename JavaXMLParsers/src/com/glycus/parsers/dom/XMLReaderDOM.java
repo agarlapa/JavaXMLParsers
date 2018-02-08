@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 public class XMLReaderDOM {
 
     public static void main(String[] args) {
-        String filePath = "src/input/employee.xml";
+        String filePath = "src/input/employees.xml";
         File xmlFile = new File(filePath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;

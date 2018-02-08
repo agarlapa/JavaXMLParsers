@@ -1,0 +1,61 @@
+Overview
+
+Java SAX Parser provides API to parse XML documents. SAX Parsers are different than DOM parser because it doesn’t load complete XML into memory and read xml document sequentially. 
+It’s an event based parser and we need to implement our Handler class with callback methods to parse XML file. It’s more efficient than DOM Parser for large XML files in terms of time 
+and memory usage.
+
+1. SAX (Simple API for XML) is an event-based parser for XML documents. 
+
+2. Unlike a DOM parser, a SAX parser creates no parse tree. 
+
+3. SAX is a streaming interface for XML, which means that applications using SAX receive event notifications about the XML document being processed an element, and attribute, 
+   at a time in sequential order starting at the top of the document, and ending with the closing of the ROOT element. The SAX parser is mostly suited for processing XML documents 
+   where each element can be processed individually. 
+
+4. The SAX parser is the first API for processing XML entity by entity (element, text, comments etc.) as they are met during traversal of the XML document.
+
+5. The SAX parser reads an XML document from top to bottom, recognizing the tokens that make up a well-formed XML document.
+
+6. Tokens are processed in the same order that they appear in the document.
+
+7. Reports the application program the nature of tokens that the parser has encountered as they occur.
+
+8. The application program provides an "event" handler that must be registered with the parser.
+
+9. As the tokens are identified, callback methods in the handler are invoked with the relevant information.
+
+10. The SAX interfaces and implementation comes with Java (at least from Java 5).
+
+When to Use?
+
+You should use a SAX parser when:
+
+1. You can process the XML document in a linear fashion from top to down.
+
+2. The document is not deeply nested.
+
+3. You are processing a very large XML document whose DOM tree would consume too much memory. Typical DOM implementations use ten bytes of memory to represent one byte of XML.
+
+4. The problem to be solved involves only a part of the XML document.
+
+5. Data is available as soon as it is seen by the parser, so SAX works well for an XML document that arrives over a stream.
+
+Disadvantages of SAX:
+
+1. We have no random access to an XML document since it is processed in a forward-only manner.
+
+2. If you need to keep track of data that the parser has seen or change the order of items, you must write the code and store the data on your own.
+
+3. It is better to use StAX parser for creating XML than using SAX parser. 
+
+Usage: 
+ 
+When you use a SAX parser you pass a handler object to the SAX parser. This handler object has a method for every "event" you want to handle, during the 
+traversal of the XML document. Examples of events are startDocument, startElement, characters etc.
+
+Documents where you need access to earlier or later parts of the document, to process a given element, are not as easy to handle. 
+Well, if you need access to earlier parts, you can store that earlier part when it occurs in a member variable in the handler object. 
+But if you need access to later elements, this is kind of difficult. Unless you process the earlier elements when the later elements needed are encountered. 
+Yet, if you need to jump around the XML document when processing it, it might be easier to use a DOM parser.
+
+In most cases where you find a SAX parser useful you may be better off using a StAX reader instead.
